@@ -119,21 +119,27 @@ class App {
     viewer
       .load(fileURL, rootPath, fileMap)
       .catch((e) => this.onError(e))
-      .then(cleanup);
-
-    if (!this.options.kiosk) {
-      this.validationCtrl.validate(fileURL, rootPath, fileMap);
-    }
+      .then((gltf) => {
+        if (!this.options.kiosk) {
+          this.validationCtrl.validate(fileURL, rootPath, fileMap, gltf);
+        }
+        cleanup();
+      });
   }
 
   /**
    * @param  {Error} error
    */
   onError (error) {
-    if (error && error.target && error.target instanceof Image) {
-      error = 'Missing texture: ' + error.target.src.split('/').pop();
+    let message = (error||{}).message || error.toString();
+    if (message.match(/ProgressEvent/)) {
+      message = 'Unable to retrieve this file. Check JS console and browser network tab.';
+    } else if (message.match(/Unexpected token/)) {
+      message = `Unable to parse file content. Verify that this file is valid. Error: "${message}"`;
+    } else if (error && error.target && error.target instanceof Image) {
+      message = 'Missing texture: ' + error.target.src.split('/').pop();
     }
-    window.alert((error||{}).message || error);
+    window.alert(message);
     console.error(error);
   }
 

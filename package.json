@@ -1,7 +1,7 @@
 {
   "name": "three-gltf-viewer",
   "productName": "glTF Viewer",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "description": "Preview glTF models using three.js and a drag-and-drop interface.",
   "main": "electron/main.js",
   "browser": "src/app.js",
@@ -17,13 +17,9 @@
     "dev": "budo src/app.js:bundle.js --port 3000",
     "dev:electron": "concurrently \"watchify src/app.js -o bundle.js\" \"npm start\"",
     "test": "node scripts/gen_test.js",
-    "deploy": "npm run build && now --static && now alias && npm run clean",
+    "deploy": "npm run build && now --prod && npm run clean",
     "clean": "rm bundle.js",
     "postversion": "git push && git push --tags"
-  },
-  "now": {
-    "alias": "gltf-viewer.donmccurdy.com",
-    "public": true
   },
   "keywords": [
     "gltf",
@@ -37,21 +33,21 @@
   "author": "Don McCurdy <dm@donmccurdy.com> (https://www.donmccurdy.com)",
   "license": "MIT",
   "dependencies": {
-    "dat.gui": "^0.7.0",
+    "dat.gui": "^0.7.5",
     "glob-to-regexp": "^0.4.0",
-    "gltf-validator": "^2.0.0-dev.2.5",
+    "gltf-validator": "^2.0.0-dev.2.7",
     "handlebars": "^4.0.11",
     "open": "0.0.5",
     "query-string": "^4.3.4",
     "serve": "^10.0.2",
     "simple-dropzone": "^0.5.1",
-    "three": "^0.97.0",
+    "three": "^0.105.1",
     "three-vignette-background": "^1.0.3",
     "zipjs-browserify": "^1.0.1"
   },
   "devDependencies": {
-    "browserify": "^14.3.0",
-    "budo": "^11.3.2",
+    "browserify": "^16.2.3",
+    "budo": "^11.5.0",
     "chalk": "^2.1.0",
     "concurrently": "^3.5.0",
     "electron": "^3.0.2",
