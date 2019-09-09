@@ -77,6 +77,7 @@ module.exports = class Viewer {
     [].forEach.call(this.stats.dom.children, (child) => (child.style.display = ''));
 
     this.scene = new THREE.Scene();
+    window.scene = this.scene;
 
     const fov = options.preset === Preset.ASSET_GENERATOR
       ? 0.8 * 180 / Math.PI
